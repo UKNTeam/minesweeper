@@ -82,97 +82,34 @@ var Board = (function() {
 
         // initialize with all tiles hidden
         self.numberOfHiddenTiles = (self.width * self.height);
-
         // Initialize the board array
-        var i;
-        for (var k = 0; k < (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.width - 1) ? _i1 <= (self.width - 1) : _i1 >= (self.width - 1); 0 <= (self.width - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})().length; k += 1) {
-            i = (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.width - 1) ? _i1 <= (self.width - 1) : _i1 >= (self.width - 1); 0 <= (self.width - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})()[k];
+        for (var i = 0; i < self.width; i++) {
             self.tiles[i] = [];
-            var j;
-            for (var _k1 = 0; _k1 < (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.height - 1) ? _i1 <= (self.height - 1) : _i1 >= (self.height - 1); 0 <= (self.height - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})().length; _k1 += 1) {
-                j = (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.height - 1) ? _i1 <= (self.height - 1) : _i1 >= (self.height - 1); 0 <= (self.height - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})()[_k1];
+            for (var j = 0; j < self.height; j++) {
                 self.tiles[i][j] = new Tile(self.tileSize, i, j);
             }
-        }
+        }     
     };
-
+    
     // Draw every tile
     Board.prototype.draw = function () {
         var self = this;
-
-        var i;
-        for (var k = 0; k < (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.width - 1) ? _i1 <= (self.width - 1) : _i1 >= (self.width - 1); 0 <= (self.width - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})().length; k += 1) {
-            i = (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.width - 1) ? _i1 <= (self.width - 1) : _i1 >= (self.width - 1); 0 <= (self.width - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})()[k];
-            var j;
-            for (var _k1 = 0; _k1 < (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.height - 1) ? _i1 <= (self.height - 1) : _i1 >= (self.height - 1); 0 <= (self.height - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})().length; _k1 += 1) {
-                j = (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.height - 1) ? _i1 <= (self.height - 1) : _i1 >= (self.height - 1); 0 <= (self.height - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})()[_k1];
-                self.tiles[i][j].draw();
-            }
-        }
+        console.log(self);
+        for (var i = 0; i < self.width; i++) {
+         for (var j = 0; j < self.height; j++) {
+            self.tiles[i][j].draw();
+         }
+     }
     };
 
     // Reveal the whole board
     Board.prototype.revealAll = function () {
         var self = this;
-
-        var i;
-        for (var k = 0; k < (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.width - 1) ? _i1 <= (self.width - 1) : _i1 >= (self.width - 1); 0 <= (self.width - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})().length; k += 1) {
-            i = (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.width - 1) ? _i1 <= (self.width - 1) : _i1 >= (self.width - 1); 0 <= (self.width - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})()[k];
-            var j;
-            for (var _k1 = 0; _k1 < (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.height - 1) ? _i1 <= (self.height - 1) : _i1 >= (self.height - 1); 0 <= (self.height - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})().length; _k1 += 1) {
-                j = (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.height - 1) ? _i1 <= (self.height - 1) : _i1 >= (self.height - 1); 0 <= (self.height - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})()[_k1];
-                self.tiles[i][j].isHidden = false;
+        for (var i = 0; i < self.width; i++) {
+            for (var j = 0; j < self.height; j++) {
+               self.tiles[i][j].isHidden = false;
             }
         }
-
         self.draw();
     };
 
@@ -182,19 +119,9 @@ var Board = (function() {
 
         var x = Math.floor((Math.random() * self.width));
         var y = Math.floor((Math.random() * self.height));
-        var i;
-        for (var k = 0; k < (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (numberOfMines - 1) ? _i1 <= (numberOfMines - 1) : _i1 >= (numberOfMines - 1); 0 <= (numberOfMines - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})().length; k += 1) {
-            i = (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (numberOfMines - 1) ? _i1 <= (numberOfMines - 1) : _i1 >= (numberOfMines - 1); 0 <= (numberOfMines - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})()[k];
+        for (var k = 0; k < numberOfMines; k++) {
             // check if already mine
-            while (            (self.tiles[x][y].isMine || ((x == mouseX) && (y == mouseY)))) {
+            while ((self.tiles[x][y].isMine || ((x == mouseX) && (y == mouseY)))) {
                 x = Math.floor((Math.random() * self.width));
                 y = Math.floor((Math.random() * self.height));
             };
@@ -208,33 +135,12 @@ var Board = (function() {
     Board.prototype.setAdjacentMines = function () {
         var self = this;
 
-        var i;
-        for (var k = 0; k < (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.width - 1) ? _i1 <= (self.width - 1) : _i1 >= (self.width - 1); 0 <= (self.width - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})().length; k += 1) {
-            i = (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.width - 1) ? _i1 <= (self.width - 1) : _i1 >= (self.width - 1); 0 <= (self.width - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})()[k];
-            var j;
-            for (var _k1 = 0; _k1 < (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.height - 1) ? _i1 <= (self.height - 1) : _i1 >= (self.height - 1); 0 <= (self.height - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})().length; _k1 += 1) {
-                j = (function () {
-    var a = [];
-    for (var _i1 = 0; 0 < (self.height - 1) ? _i1 <= (self.height - 1) : _i1 >= (self.height - 1); 0 <= (self.height - 1) ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})()[_k1];
+        for(var i = 0; i < self.width; i++){
+            for(var j = 0; j < self.height; j++){
                 self.computeAdjacentMines(i, j);
             }
         }
-    };
-
+    }
     // Compute the number of adjacent mines of tile x, y
     Board.prototype.computeAdjacentMines = function (x, y) {
         var self = this;
