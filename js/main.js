@@ -161,7 +161,7 @@ var Board = (function () {
         // inside canvas ?
         if (x + i >= 0 && x + i < width && y + j >= 0 && y + j < height) {
           // is a mine ?
-          if (that.tiles[x + i][y + j].isMine) {
+          if (self.tiles[x + i][y + j].isMine) {
             count += 1;
           }
         }
