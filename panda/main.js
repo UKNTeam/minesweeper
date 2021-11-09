@@ -1,11 +1,15 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-// initialize game sprites
+// initialize game sprites and music
 var backgroundSprite = new Image();
 var mineSprite = new Image();
 var flagSprite = new Image();
 var tileSprite = new Image();
+var soundGameOVer = new Audio()
+var soundOpen = new Audio();
+var soundSetFlag = new Audio();
+var soundRemoveFlag = new Audio();
 
 // load game sprites
 backgroundSprite.src = "img/background.jpg";
@@ -13,6 +17,11 @@ mineSprite.src = "img/mine.jpg";
 flagSprite.src = "img/flag.jpg";
 tileSprite.src = "img/tile.jpg";
 
+//load sound game
+soundGameOVer.src = "/sounds/game_over.wav";
+soundOpen.src = "/sounds/open.ogg";
+soundSetFlag.src = "/sounds/flag_set.ogg";
+soundRemoveFlag.src = "/sounds/flag_remove.ogg"
 
 // Tile class
 var Tile = (function() {
@@ -47,6 +56,7 @@ var Tile = (function() {
         else {
             // background
             ctx.drawImage(backgroundSprite, x, y);
+            soundOpen.play()
         }
 
         // if tile uncovered
@@ -171,7 +181,6 @@ var Board = (function() {
     for (var _i1 = - 1; - 1 < 1 ? _i1 <= 1 : _i1 >= 1; - 1 <= 1 ? _i1++ : _i1--) { a.push(_i1) }
     return a;
 })()[_k1];
-                // inside canvas ?
                 if ((((((x + i) >= 0) && ((x + i) < width)) && ((y + j) >= 0)) && ((y + j) < height))) {
                     // is a mine ?
                     if (self.tiles[(x + i)][(y + j)].isMine) {
@@ -198,6 +207,7 @@ var Board = (function() {
 
         // if it is empty, reveal around
         if ((self.tiles[xInit][yInit].numberOfAdjacentMines == 0)) {
+            console.log("OK");
             var clickedArr = self.revealAroundTile([xInit, yInit]);
             self.recursiveReveal(clickedArr);
         }
@@ -219,28 +229,8 @@ var Board = (function() {
         currentTile.wasSearched = true;
 
         if ((currentTile.numberOfAdjacentMines == 0)) {
-            var i;
-            for (var k = 0; k < (function () {
-    var a = [];
-    for (var _i1 = - 1; - 1 < 1 ? _i1 <= 1 : _i1 >= 1; - 1 <= 1 ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})().length; k += 1) {
-                i = (function () {
-    var a = [];
-    for (var _i1 = - 1; - 1 < 1 ? _i1 <= 1 : _i1 >= 1; - 1 <= 1 ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})()[k];
-                var j;
-                for (var _k1 = 0; _k1 < (function () {
-    var a = [];
-    for (var _i1 = - 1; - 1 < 1 ? _i1 <= 1 : _i1 >= 1; - 1 <= 1 ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})().length; _k1 += 1) {
-                    j = (function () {
-    var a = [];
-    for (var _i1 = - 1; - 1 < 1 ? _i1 <= 1 : _i1 >= 1; - 1 <= 1 ? _i1++ : _i1--) { a.push(_i1) }
-    return a;
-})()[_k1];
+            for (var i = -1; i < 2; i += 1) {
+                for (var j = -1; j < 2; j += 1) {
                     // inside canvas ?
                     if ((((((x + i) >= 0) && ((x + i) < width)) && ((y + j) >= 0)) && ((y + j) < height))) {
                         // is not a mine ?
@@ -412,6 +402,12 @@ var Game = (function() {
 
             if (rightClick) {
                 clickedTile.isFlagged = !(clickedTile.isFlagged);
+                if(clickedTile.isFlagged){
+                    soundSetFlag.play()
+                }
+                else{
+                    soundRemoveFlag.play()
+                }
                 clickedTile.draw();
             }
             else if (!(clickedTile.isFlagged)) {
@@ -451,6 +447,7 @@ var Game = (function() {
         }
         else {
             self.drawGUI("Game over! Click to play again");
+            soundGameOVer.play();
         }
 
         // reveal the mines
