@@ -46,14 +46,14 @@ var Tile = (function () {
     if (self.isHidden) {
       if (self.isFlagged) {
         // unclicked flagged
-        ctx.drawImage(flagSprite, x, y);
+        ctx.drawImage(flagSprite, x, y, self.size, self.size);
       } else {
         // unclicked
-        ctx.drawImage(tileSprite, x, y);
+        ctx.drawImage(tileSprite, x, y, self.size, self.size);
       }
     } else {
       // background
-      ctx.drawImage(backgroundSprite, x, y);
+      ctx.drawImage(backgroundSprite, x, y, self.size, self.size);
       soundOpen.play();
     }
 
@@ -275,7 +275,7 @@ var Game = (function () {
     self.numberOfMines = numberOfMines;
 
     self.guiHeight = 25;
-    self.tileSize = 25;
+    self.tileSize = 30;
 
     self.board = new Board(self.width, self.height, self.tileSize);
     self.mines = [];
@@ -446,6 +446,6 @@ var Game = (function () {
 var game = 0;
 window.onload = function () {
   console.log("start");
-  game = new Game(15, 15, 25);
+  game = new Game(30, 30, 100);
   game.init();
 };
